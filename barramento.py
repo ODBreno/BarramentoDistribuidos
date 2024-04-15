@@ -1,17 +1,23 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Implementação da primeira ação
-@app.route('/servicos', methods=['GET'])
-def servico1(servico):
-    if servico == 'mensagem':
-        return jsonify({'mensagem': 'Mensagem recebida com sucesso!'})
-    elif servico == 'arquivo':
-        return jsonify({'mensagem': 'Arquivo alterado com sucesso!'})
-    elif servico == 'calculo':
-        return jsonify({'mensagem': 'Cálculo realizado com sucesso!'})
+@app.route('/servicos', methods=['POST'])
+def servicos():
+    data = request.json
     
+    if 'servico' in data:
+        servico = data['servico']
+        if servico == 'mensagem':
+            mensagem = data['mensagem']
+            if mensagem:
+                return jsonify({'mensagem': f'Mensagem "{mensagem}" recebida com sucesso!'})
+            else:
+                return jsonify({'mensagem': 'Nenhuma mensagem recebida!'})
+        elif servico == 'arquivo':
+            return jsonify({'mensagem': 'Arquivo alterado com sucesso!'})
+        elif servico == 'calculo':
+            return jsonify({'mensagem': 'Cálculo realizado com sucesso!'})
     else:
         return jsonify({'mensagem': 'Serviço não encontrado!'})
 

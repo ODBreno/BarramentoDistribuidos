@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Contrato de Serviços
+  description: Contrato OpenAPI para os serviços do aplicativo Flutter
+  version: 1.0.0
+servers:
+  - url: http://localhost:5001
+    description: Servidor de produção
+paths:
+  /servicos:
+    post:
+      summary: Chamar Serviço via Barramento
+      requestBody:
+        required: true
+        content:
+          
+          application/json:
+            schema:
+              type: object
+              properties:
+                servico:
+                  type: string
+                mensagem:   # Adicionado para 'mensagem'
+                  type: string
+                nome_arquivo:  # Adicionado para 'arquivo'
+                  type: string
+                texto:    # Adicionado para 'arquivo'
+                  type: string
+                numero1:  # Adicionado para 'calculo'
+                  type: number
+                numero2:  # Adicionado para 'calculo'
+                  type: number
+                operador: # Adicionado para 'calculo'
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                  resultado:
+                    type: number
+                  resposta:
+                    type: string
+                  # Adicionar mais propriedades conforme necessário

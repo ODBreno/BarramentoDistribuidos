@@ -36,13 +36,13 @@ def servicos():
             # Leitura do saldo antigo
             compra = data.get('creditos')
             r1 = requests.get(url_le_arquivo, json=data).json()
-            saldo_antigo = r1.get('saldo')
+            saldo_antigo = r1.get('saldo') if  r1.get('saldo') is not None else 0
             print(r1)
             
             # Cálculo do novo saldo
             json_calculo = {
-                'numero1': saldo_antigo, 
-                'numero2': compra,
+                'numero1': int(saldo_antigo), 
+                'numero2': int(compra),
                 'operador': '+'
             }
             r2 = requests.get(url_calculo, json=json_calculo).json()
@@ -52,7 +52,7 @@ def servicos():
             # Registro do novo saldo e envio da resposta
             json_arquivo = {
                 'nome_arquivo': data.get('cpf'), 
-                'texto': saldo_novo
+                'texto': str(saldo_novo)
             }
             r3 = requests.get(url_altera_arquivo, json=json_arquivo).json()
             print(r3)
